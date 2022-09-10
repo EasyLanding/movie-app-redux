@@ -30,6 +30,7 @@ const MovieContent = () =>
     const dispatch = useDispatch()
     let searchDataUp = useSelector(state => state.repos.movieElement)
 
+    const [idxCookie, setIdxCookie] = useState(0)
     const [minIndex, setMinIndex] = useState(0)
     const [maxIndex, setMaxIndex] = useState(0)
     const [current, setCurrent] = useState(1)
@@ -66,7 +67,9 @@ const MovieContent = () =>
         let idx = searchDataUp.findIndex((el) => el.id === id)
         let newArrString = JSON.stringify(searchDataUp[idx])
 
-        let name = "1";
+        let name = idx;
+        setIdxCookie(idx)
+        console.log(idxCookie)
         let value = newArrString
         document.cookie = name + "=" + value
     };
@@ -115,6 +118,7 @@ const MovieContent = () =>
                 tabRated ? <MovieContentCookie
                     toggleTabSearch={ () => dispatch(setTabRated(false)) }
                     toggleTabRate={ () => dispatch(setTabRated(true)) }
+                    idxCookie={ idxCookie }
                     changeRateMovies={ changeRateMovie }
                 /> :
                     <div className='conteinerDiv'>

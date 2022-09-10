@@ -1,11 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getResponseGenreMovieDB } from '../../redux/service';
+import { useEffect } from 'react'
 import './genres.css'
 
 const Genres = ({ genreIds }) =>
 {
     const dispatch = useDispatch()
-    dispatch(getResponseGenreMovieDB())
+    useEffect(() =>
+    {
+        dispatch(getResponseGenreMovieDB())
+    }, [dispatch])
     let genre = useSelector(state => state.repos.genre)
 
     return (
