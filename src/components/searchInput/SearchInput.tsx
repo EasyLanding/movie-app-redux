@@ -2,56 +2,49 @@ import { Component } from 'react';
 import './SearchInput.css';
 import UseDebounce from '../../hooks/hooks';
 
-export default class SearchInput extends Component
-{
+export default class SearchInput extends Component {
     state = {
         value: '',
     };
 
-    onToggleInput = (e) =>
-    {
+    onToggleInput = (e: any) => {
         const inputText = e.target.value;
-        this.setState(() =>
-        {
+        this.setState(() => {
             return {
                 value: inputText,
             };
         });
     };
 
-    render ()
-    {
+    render() {
         return (
             <div className='searchInput'>
                 <span className="icon"><i className="fa fa-search"></i></span>
                 <Input
-                    text={ this.state.value }
-                    onToggleInput={ this.onToggleInput }
-                    searchMovie={ this.props.searchMovie }
+                    text={this.state.value}
+                    onToggleInput={this.onToggleInput}
+                    searchMovie={this.props.searchMovie}
                 />
             </div>
         )
     }
 }
-
-function Input ({ text, onToggleInput, searchMovie })
-{
-    const debounced = UseDebounce(searchMovie, 700);
+//{ text, onToggleInput, searchMovie }
+function Input(props: any) {
+    const debounced = UseDebounce(props.searchMovie, 700);
     return (
         <input
-            type={ 'search' }
+            type={'search'}
             className='searchInput-search'
             placeholder="Type to search..."
-            value={ text }
-            onChange={ (e) =>
-            {
-                if (e.target.value.charAt(0) === ' ')
-                {
+            value={props.text}
+            onChange={(e) => {
+                if (e.target.value.charAt(0) === ' ') {
                     e.target.value = '';
                 }
-                onToggleInput(e);
+                props.onToggleInput(e);
                 debounced(e.target.value);
-            } }
+            }}
         />
     );
 }

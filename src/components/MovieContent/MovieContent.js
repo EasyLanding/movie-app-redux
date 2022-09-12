@@ -69,7 +69,6 @@ const MovieContent = () =>
 
         let name = idx;
         setIdxCookie(idx)
-        console.log(idxCookie)
         let value = newArrString
         document.cookie = name + "=" + value
     };
