@@ -1,50 +1,31 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import './SearchInput.css';
 import UseDebounce from '../../hooks/hooks';
 
-export default class SearchInput extends Component {
-    state = {
-        value: '',
-    };
-
-    onToggleInput = (e: any) => {
-        const inputText = e.target.value;
-        this.setState(() => {
-            return {
-                value: inputText,
-            };
-        });
-    };
-
-    render() {
-        return (
-            <div className='searchInput'>
-                <span className="icon"><i className="fa fa-search"></i></span>
-                <Input
-                    text={this.state.value}
-                    onToggleInput={this.onToggleInput}
-                    searchMovie={this.props.searchMovie}
-                />
-            </div>
-        )
-    }
-}
-//{ text, onToggleInput, searchMovie }
-function Input(props: any) {
+const SearchInput = (props: any) => {
+    const [value, setValue] = useState('')
     const debounced = UseDebounce(props.searchMovie, 700);
+    const onToggleInput = (e: any) => {
+        const inputText = e.target.value;
+        setValue(inputText)
+    };
     return (
-        <input
-            type={'search'}
-            className='searchInput-search'
-            placeholder="Type to search..."
-            value={props.text}
-            onChange={(e) => {
-                if (e.target.value.charAt(0) === ' ') {
-                    e.target.value = '';
-                }
-                props.onToggleInput(e);
-                debounced(e.target.value);
-            }}
-        />
+        <div className='searchInput'>
+            <span className="icon"><i className="fa fa-search"></i></span>
+            <input
+                type={'search'}
+                className='searchInput-search'
+                placeholder="Type to search..."
+                value={value}
+                onChange={(e: any) => {
+                    if (e.target.value.charAt(0) === ' ') {
+                        e.target.value = '';
+                    }
+                    onToggleInput(e);
+                    debounced(e.target.value);
+                }}
+            />
+        </div>
     );
 }
+export default SearchInput

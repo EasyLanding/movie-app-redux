@@ -34,7 +34,7 @@ const MovieContent = () => {
     const [maxIndex, setMaxIndex] = useState(0)
     const [current, setCurrent] = useState(1)
 
-    const searchMovie = ((searchData: string) => {
+    let searchMovie = ((searchData: any) => {
         dispatch(setLoading(true))
         if (searchDataUp) {
             dispatch(getResponseMovieDB(searchData))
